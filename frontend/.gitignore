@@ -12,6 +12,18 @@ dist
 dist-ssr
 *.local
 
+# Environment and secret files
+.env
+.env.*
+.env.local
+.env.production
+*.pem
+*.key
+google-services.json
+credentials.json
+firebase-*.json
+uploads/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
