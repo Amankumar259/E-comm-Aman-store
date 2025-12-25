@@ -1,0 +1,13 @@
+.env
+.env.*
+node_modules
+.env.local
+.env.production
+.env.*.local
+uploads/
+*.pem
+*.key
+*.p12
+credentials.json
+google-services.json
+firebase-*.json
