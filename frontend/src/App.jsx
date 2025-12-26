@@ -5,13 +5,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <>
-      <ToastContainer />
-      <Navigation />
-      <main className="py-3">
-        <Outlet />
-      </main>
-    </>
+    <div className="app">
+      <>
+        <ToastContainer />
+        <Navigation />
+        <main className="py-3">
+          <Outlet />
+        </main>
+      </>
+    </div>
   );
 };
 export default App;
