@@ -3,7 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query/react";
 import { apiSlice } from "../api/apiSlice";
 import authReducer from "../features/auth/authSlice";
 import favoriteReducer from "../features/favorites/favoriteSlice";
-import { getFavoritesFromLocalStorage } from "../../../utils/localStorage";
+import { getFavoritesFromLocalStorage } from "../utils/localStorage";
 import shopReducer from "../../redux/features/shop/shopSlice";
 import cartSliceReducer from "./cart/cartSlice";
 
