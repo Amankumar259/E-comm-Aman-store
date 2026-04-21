@@ -12,13 +12,24 @@ import productRoutes from "./routes/productRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 
-dotenv.config(); // Ensure you load .env variables
+//cors
+import cors from "cors";
+
+dotenv.config();
 
 const port = process.env.PORT || 5000;
 
 connectDB();
 
 const app = express();
+
+//deploy
+app.use(
+  cors({
+    origin: "https://your-frontend.vercel.app",
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
