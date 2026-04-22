@@ -30,7 +30,7 @@ const UserList = () => {
       try {
         await deleteUser(id);
       } catch (error) {
-        toast.error(error.data.message || error.error);
+        toast.error(error?.data?.message || error?.error || "Failed to delete user. Try again.");
       }
     }
   };
@@ -52,7 +52,7 @@ const UserList = () => {
       setEditableUserId(null);
       refetch();
     } catch (error) {
-      toast.error(error.data.message || error.error);
+      toast.error(error?.data?.message || error?.error || "Failed to update user. Try again.");
     }
   };
 

@@ -66,10 +66,7 @@ const ProductUpdate = () => {
       });
       setImage(res.image);
     } catch (err) {
-      toast.success("Item added successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
+      toast.error("Image upload failed. Please try again.");
     }
   };
 
@@ -105,7 +102,7 @@ const ProductUpdate = () => {
       navigate("/admin/allproductslist");
     } catch (err) {
       console.error("Update error:", err);
-      toast.error(err.data?.message || "Product update failed. Try again.");
+      toast.error(err?.data?.message || err?.message || "Product update failed. Try again.");
     }
   };
 

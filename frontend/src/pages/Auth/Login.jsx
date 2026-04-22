@@ -36,7 +36,7 @@ const Login = () => {
       navigate(redirect);
       toast.success("User Logged in");
     } catch (err) {
-      toast.error(err?.data?.message || err.message);
+      toast.error(err?.data?.message || err?.message || "An error occurred. Please try again.");
     }
   };
 

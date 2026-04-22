@@ -41,7 +41,7 @@ const Profile = () => {
         dispatch(setCredentials({ ...res }));
         toast.success("Profile updated successfully");
       } catch (err) {
-        toast.error(err?.data?.message || err.message);
+        toast.error(err?.data?.message || err?.message || "An error occurred. Please try again.");
       }
     }
   };

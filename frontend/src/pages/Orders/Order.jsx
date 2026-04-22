@@ -63,7 +63,7 @@ const Order = () => {
         refetch();
         toast.success("Order is paid");
       } catch (error) {
-        toast.error(error?.data?.message || error.message);
+        toast.error(error?.data?.message || error?.message || "Failed to process payment. Please try again.");
       }
     });
   }
