@@ -30,7 +30,11 @@ const UserList = () => {
       try {
         await deleteUser(id);
       } catch (error) {
-        toast.error(error?.data?.message || error?.error || "Failed to delete user. Try again.");
+        toast.error(
+          error?.data?.message ||
+            error?.error ||
+            "Failed to delete user. Try again.",
+        );
       }
     }
   };
@@ -52,7 +56,11 @@ const UserList = () => {
       setEditableUserId(null);
       refetch();
     } catch (error) {
-      toast.error(error?.data?.message || error?.error || "Failed to update user. Try again.");
+      toast.error(
+        error?.data?.message ||
+          error?.error ||
+          "Failed to update user. Try again.",
+      );
     }
   };
 
@@ -63,7 +71,7 @@ const UserList = () => {
         <Loader />
       ) : error ? (
         <Message variant="danger">
-          {error?.data.message || error.message}
+          {error?.data?.message || error?.message || "Failed to load users"}
         </Message>
       ) : (
         <div className="flex flex-col md:flex-row">

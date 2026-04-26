@@ -13,7 +13,9 @@ const UserOrder = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error?.data?.error || error.error}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error?.message || "Failed to load orders"}
+        </Message>
       ) : (
         <table className="w-full">
           <thead>
