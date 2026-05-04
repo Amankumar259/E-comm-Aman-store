@@ -14,7 +14,7 @@ import ProductCard from "./Products/ProductCard";
 const Shop = () => {
   const dispatch = useDispatch();
   const { categories, products, checked, radio } = useSelector(
-    (state) => state.shop
+    (state) => state.shop,
   );
 
   const categoriesQuery = useFetchCategoriesQuery();
@@ -26,18 +26,18 @@ const Shop = () => {
   });
 
   useEffect(() => {
-    if (!categoriesQuery.isLoading) {
+    if (!categoriesQuery.isLoading && categoriesQuery.data) {
       dispatch(setCategories(categoriesQuery.data));
     }
   }, [categoriesQuery.data, dispatch]);
 
   useEffect(() => {
     if (!checked.length || !radio.length) {
-      if (!filteredProductsQuery.isLoading) {
+      if (!filteredProductsQuery.isLoading && filteredProductsQuery.data) {
         const filteredProducts = filteredProductsQuery.data.filter(
           (product) =>
             product.price.toString().includes(priceFilter) ||
-            product.price === parseInt(priceFilter, 10)
+            product.price === parseInt(priceFilter, 10),
         );
 
         dispatch(setProducts(filteredProducts));
@@ -47,7 +47,7 @@ const Shop = () => {
 
   const handleBrandClick = (brand) => {
     const productsByBrand = filteredProductsQuery.data?.filter(
-      (product) => product.brand === brand
+      (product) => product.brand === brand,
     );
     dispatch(setProducts(productsByBrand));
   };
@@ -63,7 +63,7 @@ const Shop = () => {
     ...new Set(
       filteredProductsQuery.data
         ?.map((product) => product.brand)
-        .filter((brand) => brand !== undefined)
+        .filter((brand) => brand !== undefined),
     ),
   ];
 
