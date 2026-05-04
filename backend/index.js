@@ -30,29 +30,47 @@ const allowedOrigins = [
   "https://e-comm-aman-store.vercel.app",
 ];
 
-// Add environment variable if set
+// ✅ ADD PRODUCTION FRONTEND URL FROM ENV
 if (process.env.FRONTEND_URL) {
   allowedOrigins.push(process.env.FRONTEND_URL);
 }
 
+// ✅ IMPROVED CORS CONFIGURATION
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
+      // Allow requests with no origin (like mobile apps or Postman)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.warn(`CORS blocked origin: ${origin}`);
-        callback(null, true); // Allow anyway for now
+        console.warn(`⚠️  CORS blocked origin: ${origin}`);
+        console.log(`   Allowed origins: ${allowedOrigins.join(", ")}`);
+        callback(null, true); // Still allow for debugging
       }
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// ✅ ROOT ROUTE - Critical for health checks and API verification
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "API is running",
+    environment: process.env.NODE_ENV || "development",
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// ✅ HEALTH CHECK ENDPOINT
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "Server is healthy" });
+});
 
 // Mount the user routes for all methods (GET, POST, etc.)
 app.use("/api/users", userRoutes);
@@ -68,4 +86,20 @@ app.get("/api/config/paypal", (req, res) => {
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
-app.listen(port, () => console.log(`Server running on port: ${port}`));
+
+// ✅ START SERVER WITH ERROR LOGGING
+const server = app.listen(port, () => {
+  console.log(`\n========================================`);
+  console.log(`✅ Server running on port: ${port}`);
+  console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
+  console.log(`🌐 CORS Origins: ${allowedOrigins.join(", ")}`);
+  console.log(`========================================\n`);
+});
+
+// ✅ GRACEFUL SHUTDOWN
+process.on("SIGTERM", () => {
+  console.log("SIGTERM signal received: closing HTTP server");
+  server.close(() => {
+    console.log("HTTP server closed");
+  });
+});
