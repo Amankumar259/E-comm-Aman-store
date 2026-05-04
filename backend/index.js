@@ -26,7 +26,7 @@ const app = express();
 //deploy
 app.use(
   cors({
-    origin: "https://your-frontend.vercel.app",
+    origin: process.env.FRONTEND_URL || "https://e-comm-aman-store.vercel.app",
     credentials: true,
   }),
 );
