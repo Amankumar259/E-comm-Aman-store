@@ -24,9 +24,22 @@ connectDB();
 const app = express();
 
 //deploy
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://e-comm-aman-store.vercel.app",
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "https://e-comm-aman-store.vercel.app",
+    origin: (origin, callback) => {
+      if (allowedOrigins.includes(origin) || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
