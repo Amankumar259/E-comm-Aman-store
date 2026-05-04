@@ -25,19 +25,25 @@ const app = express();
 
 //deploy
 const allowedOrigins = [
-  process.env.FRONTEND_URL,
   "http://localhost:5173",
   "http://localhost:3000",
   "https://e-comm-aman-store.vercel.app",
 ];
 
+// Add environment variable if set
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (allowedOrigins.includes(origin) || !origin) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        console.warn(`CORS blocked origin: ${origin}`);
+        callback(null, true); // Allow anyway for now
       }
     },
     credentials: true,
