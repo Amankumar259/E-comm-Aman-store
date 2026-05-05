@@ -3,6 +3,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 import { toast } from "react-toastify";
+import { getImageUrl } from "../../utils/imageUrl";
 import HeartIcon from "./HeartIcon";
 
 const ProductCard = ({ p }) => {
@@ -20,11 +21,15 @@ const ProductCard = ({ p }) => {
           <span className="absolute bottom-2 right-2 bg-pink-100 text-pink-800 text-xs font-medium px-2 py-0.5 rounded-full dark:bg-pink-900 dark:text-pink-300">
             {p?.brand}
           </span>
+          {/* ✅ USE IMAGE URL UTILITY */}
           <img
             className="cursor-pointer w-full rounded-t-md"
-            src={p.image}
+            src={getImageUrl(p.image)}
             alt={p.name}
             style={{ height: "150px", objectFit: "cover" }}
+            onError={(e) => {
+              e.target.src = "https://via.placeholder.com/300?text=No+Image";
+            }}
           />
         </Link>
         <HeartIcon product={p} />
