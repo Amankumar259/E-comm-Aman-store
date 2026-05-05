@@ -87,7 +87,6 @@ app.get("/api/config/paypal", (req, res) => {
 
 // ✅ STATIC FILE SERVING - PRODUCTION READY
 // Using ES modules, we need to construct __dirname differently
-import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
