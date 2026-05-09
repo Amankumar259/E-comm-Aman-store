@@ -20,6 +20,7 @@ import HeartIcon from "./HeartIcon";
 import Ratings from "./Ratings";
 import ProductTabs from "./ProductTabs";
 import { addToCart } from "../../redux/features/cart/cartSlice.js";
+import { getImageUrl } from "../../utils/imageUrl";
 
 const ProductDetails = () => {
   const { id: productId } = useParams();
@@ -54,7 +55,11 @@ const ProductDetails = () => {
       refetch();
       toast.success("Review created successfully");
     } catch (error) {
-      toast.error(error?.data?.message || error?.message || "Failed to create review. Please try again.");
+      toast.error(
+        error?.data?.message ||
+          error?.message ||
+          "Failed to create review. Please try again.",
+      );
     }
   };
 
@@ -86,9 +91,13 @@ const ProductDetails = () => {
           <div className="flex flex-wrap relative items-between mt-[2rem] ml-[10rem]">
             <div>
               <img
-                src={product.image}
+                src={getImageUrl(product.image)}
                 alt={product.name}
                 className="w-full xl:w-[45rem] lg:w-[45rem] md:w-[30rem] sm:w-[20rem]mr-[2rem]"
+                onError={(e) => {
+                  e.target.src =
+                    "https://via.placeholder.com/300?text=No+Image";
+                }}
               />
 
               <HeartIcon product={product} />

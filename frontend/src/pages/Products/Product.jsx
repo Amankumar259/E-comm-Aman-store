@@ -1,14 +1,18 @@
 import { Link } from "react-router-dom";
 import HeartIcon from "./HeartIcon";
+import { getImageUrl } from "../../utils/imageUrl";
 
 const Product = ({ product }) => {
   return (
     <div className="w-[25rem] ml-[2rem] p-3 relative">
       <div className="relative">
         <img
-          src={product.image}
+          src={getImageUrl(product.image)}
           alt={product.name}
           className="w-[30rem] rounded"
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/300?text=No+Image";
+          }}
         />
 
         <HeartIcon product={product} />

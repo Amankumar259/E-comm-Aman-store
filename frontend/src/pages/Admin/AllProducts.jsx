@@ -3,6 +3,7 @@ import moment from "moment";
 import { useAllProductsQuery } from "../../redux/api/productApiSlice";
 import AdminMenu from "./AdminMenu";
 import Loader from "../../components/Loader";
+import { getImageUrl } from "../../utils/imageUrl";
 
 const AllProducts = () => {
   const { data: products, isLoading, isError } = useAllProductsQuery();
@@ -31,9 +32,13 @@ const AllProducts = () => {
               >
                 <div className="flex">
                   <img
-                    src={product.image}
+                    src={getImageUrl(product.image)}
                     alt={product.name}
                     className="w-[15rem] object-cover"
+                    onError={(e) => {
+                      e.target.src =
+                        "https://via.placeholder.com/300?text=No+Image";
+                    }}
                   />
 
                   <div className="p-4 flex flex-col justify-around">
